@@ -160,9 +160,9 @@
       if (!blob) { showToast('Could not create the PNG. Try another image.'); return; }
       const downloadUrl = URL.createObjectURL(blob);
       const link = document.createElement('a');
-      const baseName = item.file.name.replace(/\.[^.]+$/, '') || 'veil-image';
+      const baseName = item.file.name.replace(/\.[^.]+$/, '') || 'hidepix-image';
       link.href = downloadUrl;
-      link.download = `${baseName}-veil.png`;
+      link.download = `${baseName}-hidepix.png`;
       document.body.appendChild(link);
       link.click();
       link.remove();
@@ -181,10 +181,10 @@
       ctx.drawImage(item.image, 0, 0);
       const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
       const channelCount = item.width * item.height * 3;
-      if (channelCount < HEADER_BYTES * 8) throw new Error('This image is too small to contain a Veil message.');
+      if (channelCount < HEADER_BYTES * 8) throw new Error('This image is too small to contain a HidePix message.');
       const header = new Uint8Array(HEADER_BYTES);
       for (let byte = 0; byte < HEADER_BYTES; byte++) header[byte] = readByte(data, byte * 8);
-      if (!MAGIC.every((value, index) => header[index] === value)) throw new Error('No Veil message found in this image.');
+      if (!MAGIC.every((value, index) => header[index] === value)) throw new Error('No HidePix message found in this image.');
       const length = new DataView(header.buffer).getUint32(4, false);
       if (length === 0 || length > capacityFor(item.width, item.height)) throw new Error('The hidden message appears incomplete or damaged.');
       const payload = new Uint8Array(length);
@@ -205,7 +205,7 @@
       $('result-message').classList.add('hidden');
       $('result-empty').classList.remove('hidden');
       $('result-empty').querySelector('strong').textContent = error.message || 'Could not read this image.';
-      $('result-empty').querySelector('span').textContent = 'Try a PNG downloaded directly from Veil.';
+      $('result-empty').querySelector('span').textContent = 'Try a PNG downloaded directly from HidePix.';
       showToast(error.message || 'Could not read this image.');
     }
   }
