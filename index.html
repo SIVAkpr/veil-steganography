@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f6f1" />
+    <meta name="description" content="Hide a private note inside an image, or uncover one already there. Everything happens on your device." />
+    <title>Veil — Private messages, hidden in plain sight</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#top" aria-label="Veil home"><span class="brand-mark">v.</span><span>veil<span class="brand-dot">.</span></span></a>
+        <div class="topbar-note"><span class="status-dot"></span> PRIVATE BY DESIGN</div>
+      </header>
+
+      <main id="top">
+        <section class="hero">
+          <div class="eyebrow"><span class="eyebrow-line"></span> A LITTLE DIGITAL MAGIC</div>
+          <h1>Say it quietly.<br /><span>Hide it in plain sight.</span></h1>
+          <p class="hero-copy">Tuck a message inside an image. It looks like an ordinary photo, but your words travel along with it.</p>
+          <div class="trust-note"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5 16 5v4.7c0 3.5-2.4 6.2-6 7.8-3.6-1.6-6-4.3-6-7.8V5l6-2.5Z"/><path d="m7.3 9.9 1.8 1.8 3.7-3.8"/></svg> Your images and messages never leave this device.</div>
+        </section>
+
+        <section class="workspace" aria-label="Steganography workspace">
+          <div class="tab-bar" role="tablist" aria-label="Choose an action">
+            <button class="tab active" id="encode-tab" role="tab" aria-selected="true" aria-controls="encode-panel" data-mode="encode"><span class="tab-icon">↗</span> Hide a message</button>
+            <button class="tab" id="decode-tab" role="tab" aria-selected="false" aria-controls="decode-panel" data-mode="decode"><span class="tab-icon">⌕</span> Reveal a message</button>
+            <div class="tab-indicator"></div>
+          </div>
+
+          <div class="panel" id="encode-panel" role="tabpanel" aria-labelledby="encode-tab">
+            <div class="panel-grid">
+              <div class="left-column">
+                <div class="section-heading"><span class="step-number">01</span><div><h2>Choose your cover</h2><p>Pick the image that will carry your message.</p></div></div>
+                <label class="dropzone" id="encode-dropzone" for="encode-file">
+                  <input id="encode-file" type="file" accept="image/png,image/jpeg,image/webp,image/bmp" hidden />
+                  <div class="dropzone-empty" id="encode-empty"><div class="upload-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5"/><path d="M5 14.5v4A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5v-4"/></svg></div><strong>Drop an image here</strong><span>or <em>browse files</em></span><small>PNG, JPG, WEBP · up to 25 MB</small></div>
+                  <div class="preview-wrap hidden" id="encode-preview-wrap"><img id="encode-preview" alt="Selected cover image" /><span class="change-image">Change image</span></div>
+                </label>
+                <div class="image-meta hidden" id="encode-meta"><span class="meta-name" id="encode-name"></span><span class="meta-size" id="encode-dimensions"></span></div>
+                <div class="privacy-card"><span class="privacy-icon">◈</span><span><strong>Only the pixels change.</strong> Your original image stays untouched.</span></div>
+              </div>
+
+              <div class="right-column">
+                <div class="section-heading"><span class="step-number">02</span><div><h2>Write your message</h2><p>Keep it short and personal.</p></div></div>
+                <div class="message-box"><textarea id="message" maxlength="10000" placeholder="The best things are worth keeping close…" aria-label="Secret message"></textarea><div class="message-footer"><span class="lock-label"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg> STORED LOCALLY</span><span id="char-count">0 / 10,000</span></div></div>
+                <div class="capacity-wrap"><div class="capacity-top"><span>Image capacity</span><span id="capacity-label">Choose an image first</span></div><div class="capacity-track"><div class="capacity-fill" id="capacity-fill"></div></div><p id="capacity-hint">A larger image can hold a longer note.</p></div>
+                <button class="primary-button" id="hide-button" disabled><span>Hide message in image</span><span class="button-arrow">↗</span></button>
+                <p class="format-hint">Downloads as a lossless PNG · hidden messages are not encrypted.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel hidden" id="decode-panel" role="tabpanel" aria-labelledby="decode-tab">
+            <div class="decode-layout">
+              <div class="decode-upload-column"><div class="section-heading"><span class="step-number">01</span><div><h2>Bring the image in</h2><p>Choose a PNG created with Veil.</p></div></div>
+                <label class="dropzone decode-dropzone" id="decode-dropzone" for="decode-file"><input id="decode-file" type="file" accept="image/*" hidden /><div class="dropzone-empty" id="decode-empty"><div class="upload-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h12m0 0-4.5-4.5M16 12l-4.5 4.5"/><path d="M14 4h4.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H14"/></svg></div><strong>Drop an image here</strong><span>or <em>browse files</em></span><small>PNG, JPG, WEBP · up to 25 MB</small></div><div class="preview-wrap hidden" id="decode-preview-wrap"><img id="decode-preview" alt="Selected image to inspect" /><span class="change-image">Change image</span></div></label>
+                <div class="image-meta hidden" id="decode-meta"><span class="meta-name" id="decode-name"></span><span class="meta-size" id="decode-dimensions"></span></div>
+                <button class="primary-button decode-button" id="reveal-button" disabled><span>Reveal hidden message</span><span class="button-arrow">⌕</span></button>
+              </div>
+              <div class="decode-result-column"><div class="section-heading"><span class="step-number">02</span><div><h2>Your message</h2><p>Any hidden note will appear here.</p></div></div>
+                <div class="result-card" id="result-card"><div class="result-empty" id="result-empty"><div class="result-sparkle">✳</div><strong>Nothing to reveal yet</strong><span>Choose an image and we’ll take a look.</span></div><div class="result-message hidden" id="result-message"><div class="message-status"><span class="status-dot"></span> MESSAGE FOUND</div><p id="revealed-text"></p><button id="copy-button" class="copy-button">⧉ &nbsp; Copy message</button></div></div>
+                <div class="result-footnote"><span>✦</span> Veil can read notes hidden with this tool. It can’t detect every steganography format.</div>
+              </div>
+            </div>
+          </div>
+          <div id="toast" class="toast" role="status" aria-live="polite"></div>
+        </section>
+
+        <section class="how-it-works"><div class="how-title"><span class="eyebrow-line"></span> UNDER THE SURFACE</div><div class="how-grid"><article><span class="how-icon">01</span><h3>Choose any image</h3><p>A photo becomes the carrier for a note only you know is there.</p></article><article><span class="how-icon">02</span><h3>Pixels do the whispering</h3><p>Your message is woven into tiny colour details, invisible to the eye.</p></article><article><span class="how-icon">03</span><h3>Share the PNG</h3><p>Send the downloaded image. Your recipient can reveal the note with Veil.</p></article></div></section>
+        <footer><a class="brand footer-brand" href="#top"><span class="brand-mark">v.</span><span>veil<span class="brand-dot">.</span></span></a><span>Made for the messages in between.</span><span class="footer-privacy"><span class="status-dot"></span> PRIVATE BY DESIGN</span></footer>
+      </main>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
+
