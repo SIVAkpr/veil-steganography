@@ -62,4 +62,6 @@ footer{border-color:#e5e5f0}
   .capacity-wrap{margin:12px 0}
   .decode-button{margin-top:12px}
 }
+/* Keep the brand row visible while scrolling. */
+.topbar{position:sticky;top:0;z-index:30;background:rgba(245,245,252,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 
