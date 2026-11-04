@@ -46,4 +46,20 @@ footer{border-color:#e5e5f0}
 .quote-mark{position:absolute;top:7px;right:13px;color:#a49be9;font:40px/1 Georgia,serif;opacity:.75}
 .quote-card p{position:relative;z-index:1;max-width:270px;margin:10px 0 0;color:#55546f;font:500 12px/1.65 var(--display)}
 @media(max-width:700px){.quote-section{padding:4px 3px 30px}.quote-grid{grid-template-columns:1fr;gap:9px}.quote-card{min-height:0;padding:13px 16px}.quote-card p{margin:5px 0;max-width:none}.quote-section h2{font-size:19px}}
+/* Keep the main tool close to the top on taller screens. */
+@media(min-width:701px) and (min-height:760px){
+  .topbar{height:64px}
+  .hero{padding:28px 0 17px}
+  .hero h1{font-size:clamp(38px,4.2vw,49px);margin:12px 0 9px;letter-spacing:-2.3px}
+  .hero-copy{line-height:1.5}
+  .trust-note{margin-top:10px}
+  .panel{padding:22px 24px 23px}
+  .panel-grid,.decode-layout{gap:24px}
+  .section-heading{margin-bottom:12px}
+  .dropzone,.decode-dropzone,.result-card{height:180px}
+  .message-box textarea{height:110px;min-height:84px}
+  .privacy-card{margin-top:10px;padding:9px 11px}
+  .capacity-wrap{margin:12px 0}
+  .decode-button{margin-top:12px}
+}
 
